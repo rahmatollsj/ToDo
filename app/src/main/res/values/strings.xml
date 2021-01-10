@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">To Do</string>
+    <string name="example_text">Example of text</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="home">Home</string>
+    <string name="motivation">Motivation</string>
+    <string name="help">Help</string>
+    <string name="add_list">Add a new list</string>
+    <string name="new_list">New list</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter_title">Enter a title</string>
+    <string name="icon">Icon</string>
+    <string name="color">Color</string>
+    <string name="what_planned">What is planned</string>
+    <string name="nothing_planned">No task is planned for this date</string>
+    <string name="no_task">All your tasks are done</string>
+    <string name="description">Description</string>
+    <string name="date">Date</string>
+    <string name="file">File</string>
+</resources>

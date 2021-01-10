@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="15dp"
+    android:paddingTop="10dp"
+    android:paddingRight="15dp"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:id="@+id/text_view_home_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/what_planned"
+        android:textSize="20sp"
+        android:fontFamily="@font/bitter_semi_bold"
+        style="@style/TextTheme"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/text_view_date"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:fontFamily="@font/bitter_regular"
+        android:paddingTop="5dp"
+        android:text="@string/example_text"
+        android:textColor="?attr/colorSecondary"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_home_title"
+        app:layout_constraintRight_toLeftOf="@id/image_view_calendar"/>
+
+    <ImageView
+        android:id="@+id/image_view_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_calendar"
+        app:tint="?attr/colorSecondary"
+        android:background="@null"
+        android:paddingLeft="5dp"
+        app:layout_constraintLeft_toRightOf="@id/text_view_date"
+        app:layout_constraintTop_toTopOf="@id/text_view_date"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_date"/>
+
+    <ImageView
+        android:id="@+id/home_image_view_tasks_done"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/tasks_done_1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/home_text_view_tasks_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nothing_planned"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_image_view_tasks_done"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_recycler_view_tasks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
