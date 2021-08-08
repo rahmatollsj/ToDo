@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:todo/ViewsModels/RootPageViewModel.dart';
 import 'package:todo/data/TaskList.dart';
+import '../listeners/RootPageListener.dart';
 
 class RootPage extends StatefulWidget {
   RootPage({Key? key, required this.title}) : super(key: key);
@@ -13,7 +14,7 @@ class RootPage extends StatefulWidget {
   _RootPageState createState() => _RootPageState();
 }
 
-class _RootPageState extends State<RootPage> {
+class _RootPageState extends State<RootPage> implements RootPageListener {
   final RootPageViewModel _viewModel = new RootPageViewModel();
   final List<Widget> _drawerItems = [Container(
     height: 84,
@@ -29,8 +30,7 @@ class _RootPageState extends State<RootPage> {
   @override
   void initState() {
     super.initState();
-
-    _viewModel.addListener(() {});
+    _viewModel.setListener(this);
 
     // Add the basic elements of the drawer.
     _drawerItems.addAll([ListTile(
@@ -49,14 +49,13 @@ class _RootPageState extends State<RootPage> {
       thickness: 1,
     )]);
 
-    // Add user's lists.
     for(int i = 0; i < _viewModel.getNbLists(); i++) {
       TaskList taskList = _viewModel.getList(i);
       _drawerItems.add(ListTile(
-            leading: Icon(IconData(taskList.icon, fontFamily: 'MaterialIcons')),
-            title: Text(taskList.title),
-            onTap: () => _changePage(i),
-          ));
+        leading: Icon(IconData(taskList.icon, fontFamily: 'MaterialIcons')),
+        title: Text(taskList.title),
+        onTap: () => _changePage(i)
+      ));
     }
   }
 
@@ -119,9 +118,25 @@ class _RootPageState extends State<RootPage> {
   }
 
   @override
-  void dispose() {
-    _viewModel.removeListener(() { });
-    super.dispose();
+  void onListAdded() {
+    TaskList taskList = _viewModel.getList(_viewModel.getNbLists() - 1);
+    setState(() {
+      _drawerItems.add(ListTile(
+          leading: Icon(IconData(taskList.icon, fontFamily: 'MaterialIcons')),
+          title: Text(taskList.title),
+          onTap: () => _changePage(_viewModel.getNbLists() - 1)
+      ));
+    });
+  }
+
+  @override
+  void onListRemoved(int index) {
+    // TODO: implement onListRemoved
+  }
+
+  @override
+  void onListUpdated(int index, int icon, String title) {
+    // TODO: implement onListUpdated
   }
 
   void _changePage(int index) {
