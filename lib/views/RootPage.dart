@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:todo/ViewsModels/RootPageViewModel.dart';
 import 'package:todo/data/TaskList.dart';
+import 'package:todo/enums/PageTypes.dart';
+import 'package:todo/views/HomePage.dart';
+import 'package:todo/views/TasksPage.dart';
 import '../listeners/RootPageListener.dart';
 
 class RootPage extends StatefulWidget {
@@ -25,7 +28,8 @@ class _RootPageState extends State<RootPage> implements RootPageListener {
       ),
     ),
   )];
-  final listTitleController = TextEditingController();
+  final _listTitleController = TextEditingController();
+  PageTypes currentPage = PageTypes.Home;
 
   @override
   void initState() {
@@ -36,7 +40,7 @@ class _RootPageState extends State<RootPage> implements RootPageListener {
     _drawerItems.addAll([ListTile(
       leading: Icon(Icons.home),
       title: Text('To Do'),
-      onTap: () => _changePage(0),
+      onTap: () => _changePage(PageTypes.Home),
     ), ListTile(
         leading: Icon(Icons.add),
         title: Text('Add a new list'),
@@ -54,13 +58,24 @@ class _RootPageState extends State<RootPage> implements RootPageListener {
       _drawerItems.add(ListTile(
         leading: Icon(IconData(taskList.icon, fontFamily: 'MaterialIcons')),
         title: Text(taskList.title),
-        onTap: () => _changePage(i)
+        onTap: () => _changePage(PageTypes.Tasks)
       ));
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget body;
+
+    switch(currentPage) {
+      case PageTypes.Home:
+        body = HomePage();
+        break;
+      case PageTypes.Tasks:
+        body = TasksPage();
+        break;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -74,13 +89,7 @@ class _RootPageState extends State<RootPage> implements RootPageListener {
           }
         )
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-          ]
-        )
-      )
+      body: body
     );
   }
 
@@ -90,7 +99,7 @@ class _RootPageState extends State<RootPage> implements RootPageListener {
       content: SingleChildScrollView(
         physics: ScrollPhysics(),
         child: TextField(
-          controller: listTitleController,
+          controller: _listTitleController,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: "Enter list title"
@@ -101,15 +110,15 @@ class _RootPageState extends State<RootPage> implements RootPageListener {
         TextButton(
           onPressed: () {
             Navigator.pop(context, 'Cancel');
-            listTitleController.clear();
+            _listTitleController.clear();
           },
           child: const Text('Cancel'),
         ),
         TextButton(
           onPressed: () {
             Navigator.pop(context, 'Add');
-            _viewModel.addList(Icons.view_list.codePoint, listTitleController.text);
-            listTitleController.clear();
+            _viewModel.addList(Icons.view_list.codePoint, _listTitleController.text);
+            _listTitleController.clear();
           },
           child: const Text('Add'),
         ),
@@ -124,8 +133,9 @@ class _RootPageState extends State<RootPage> implements RootPageListener {
       _drawerItems.add(ListTile(
           leading: Icon(IconData(taskList.icon, fontFamily: 'MaterialIcons')),
           title: Text(taskList.title),
-          onTap: () => _changePage(_viewModel.getNbLists() - 1)
+          onTap: () => _changePage(PageTypes.Tasks)
       ));
+      currentPage = PageTypes.Tasks;
     });
   }
 
@@ -139,7 +149,10 @@ class _RootPageState extends State<RootPage> implements RootPageListener {
     // TODO: implement onListUpdated
   }
 
-  void _changePage(int index) {
-
+  void _changePage(PageTypes page) {
+    setState(() {
+      currentPage = page;
+    });
+    Navigator.pop(context);
   }
 }

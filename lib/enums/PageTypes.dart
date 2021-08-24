@@ -1,0 +1,5 @@
+enum PageTypes
+{
+  Home,
+  Tasks
+}
