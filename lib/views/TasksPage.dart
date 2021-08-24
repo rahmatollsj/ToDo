@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 
-class HomePage extends StatefulWidget {
+class TasksPage extends StatefulWidget {
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _TasksPageState createState() => _TasksPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _TasksPageState extends State<TasksPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Home')
+        Text('Tasks')
       ],
     );
   }
